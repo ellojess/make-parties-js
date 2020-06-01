@@ -2,9 +2,17 @@
 const express = require('express')
 const app = express()
 
+// require handlebars
+var exphbs = require('express-handlebars');
+
+// Use "main" as our default layout
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+// Use handlebars to render
+app.set('view engine', 'handlebars');
+
 // Tell our app to send the "hello world" message to our home page
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.render('home', { msg: 'Handlebars are Cool!' });
 })
 
 // Choose a port to listen on

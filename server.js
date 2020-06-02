@@ -2,6 +2,9 @@
 const express = require('express')
 const app = express()
 
+// INITIALIZE BODY-PARSER AND ADD IT TO APP
+const bodyParser = require('body-parser');
+
 // require handlebars
 var exphbs = require('express-handlebars');
 
@@ -17,10 +20,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 // Use handlebars to render
 app.set('view engine', 'handlebars');
 
-// Tell our app to send the "hello world" message to our home page
-// app.get('/', (req, res) => {
-//   res.render('home', { msg: 'Handlebars are Cool!' });
-// })
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // INDEX
 app.get('/', (req, res) => {
@@ -38,4 +38,9 @@ const port = process.env.PORT || 3000;
 // Tell the app what port to listen on
 app.listen(port, () => {
   console.log('App listening on port 3000!')
+})
+
+// CREATE
+app.post('/events', (req, res) => {
+  console.log(req.body);
 })

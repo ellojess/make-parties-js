@@ -6,10 +6,19 @@ const app = express()
 const bodyParser = require('body-parser');
 
 // require handlebars
-var exphbs = require('express-handlebars');
+// var exphbs = require('express-handlebars');
 
 // access models
 const models = require('./db/models');
+
+// get data back from db 
+const handlebars = require('handlebars');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const exphbs = require('express-handlebars');
+const hbs = exphbs.create({
+    defaultLayout: 'main',
+    handlebars: allowInsecurePrototypeAccess(handlebars),
+});
 
 // OUR MOCK ARRAY OF PROJECTS
 var events = [
@@ -19,7 +28,9 @@ var events = [
   ]
 
 // Use "main" as our default layout
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+// app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', hbs.engine);
+
 // Use handlebars to render
 app.set('view engine', 'handlebars');
 
@@ -48,8 +59,20 @@ app.listen(port, () => {
 // CREATE
 app.post('/events', (req, res) => {
   models.Event.create(req.body).then(event => {
-    res.redirect(`/`);
+    res.redirect(`/events/${event.id}`)
   }).catch((err) => {
     console.log(err)
   });
+})
+
+// SHOW
+app.get('/events/:id', (req, res) => {
+  // Search for the event by its id that was passed in via req.params
+  models.Event.findByPk(req.params.id).then((event) => {
+    // If the id is for a valid event, show it
+    res.render('events-show', { event: event })
+  }).catch((err) => {
+    // if they id was for an event not in our db, log an error
+    console.log(err.message);
+  })
 })

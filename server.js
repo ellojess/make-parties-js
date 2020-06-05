@@ -12,6 +12,10 @@ const bodyParser = require('body-parser');
 // access models
 const models = require('./db/models');
 
+// controllers 
+require('./controllers/events')(app, models);
+require('./controllers/rsvps')(app, models);
+
 // get data back from db 
 const handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');

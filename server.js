@@ -13,7 +13,7 @@ const bodyParser = require('body-parser');
 const models = require('./db/models');
 
 // controllers 
-require('./controllers/events')(app, models);
+require('./controllers/event')(app, models);
 require('./controllers/rsvps')(app, models);
 
 // get data back from db 

@@ -21,7 +21,6 @@ module.exports = function (app, models) {
           res.render('events-index', { events: events });
       });
   })
-}
 
   // SHOW
   app.get('/events/:id', (req, res) => {
@@ -31,3 +30,5 @@ module.exports = function (app, models) {
         console.log(err.message);
     })
   });
+
+}

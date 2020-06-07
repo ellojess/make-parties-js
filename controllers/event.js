@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     imgUrl: DataTypes.STRING 
   }, {});
   Event.associate = function(models) {
-    // associations can be defined here
   };
   return Event;
 };
@@ -20,6 +19,11 @@ module.exports = function (app, models) {
       models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
           res.render('events-index', { events: events });
       });
+  })
+
+  // NEW 
+  app.get('/events/new', (req, res) => {
+    res.render('events-new', {});
   })
 
   // SHOW

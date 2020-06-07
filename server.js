@@ -52,9 +52,9 @@ app.get('/', (req, res) => {
 })
 
 // NEW
-app.get('/events/new', (req, res) => {
-  res.render('events-new', {});
-})
+// app.get('/events/new', (req, res) => {
+//   res.render('events-new', {});
+// })
   
 // Choose a port to listen on
 const port = process.env.PORT || 3000;

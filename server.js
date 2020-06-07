@@ -12,10 +12,6 @@ const bodyParser = require('body-parser');
 // access models
 const models = require('./db/models');
 
-// controllers 
-require('./controllers/event')(app, models);
-require('./controllers/rsvps')(app, models);
-
 // get data back from db 
 const handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
@@ -39,10 +35,16 @@ app.engine('handlebars', hbs.engine);
 // Use handlebars to render
 app.set('view engine', 'handlebars');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
 // override with POST having ?_method=DELETE or ?_method=PUT
 app.use(methodOverride('_method'))
+
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false })); 
+
+// controllers 
+require('./controllers/event')(app, models);
+require('./controllers/rsvps')(app, models);
 
 // Index
 app.get('/', (req, res) => {
